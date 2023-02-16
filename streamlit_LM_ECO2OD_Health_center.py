@@ -71,7 +71,7 @@ from sklearn.metrics import mean_squared_log_error
 # page_names_to_funcs[selected_page]()
 
 
-st.set_page_config(layout="wide", page_title="streamlit_LM_Health_center")
+st.set_page_config(layout="wide", page_title="LM_Health_center")
 
 
 
