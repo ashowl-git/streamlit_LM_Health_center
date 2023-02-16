@@ -350,7 +350,7 @@ df_concat.loc[cond1,'kW'] = 0
 st.checkbox("Use container width _ BASE", value=False, key="use_container_width")
 st.dataframe(df_concat, use_container_width=st.session_state.use_container_width)
 
-# df_concat = df_concat.reset_index(drop=True)
+df_concat = df_concat.reset_index(drop=False)
 df_concat = df_concat.round(2)
 
 
