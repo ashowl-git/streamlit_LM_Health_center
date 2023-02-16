@@ -288,7 +288,7 @@ def user_input_features2():
     창호열관류율_2 = st.sidebar.slider('창호열관류율_2', 0.0, 3.0, 4.0)
     SHGC_2 = st.sidebar.slider('SHGC_2', 0.0, 0.688, 2.0)
     문열관류율_2 = st.sidebar.slider('문열관류율_2', 0.0, 3.0, 4.0)
-    난방효율_2 = st.sidebar.select_slider('난방효율_2', 0, 87, 100)
+    난방효율_2 = st.sidebar.select_slider('난방효율_2', 0.0, 87.0, 100.0)
     냉방효율_2 = st.sidebar.slider(' 냉방효율_2', 0.0, 3.0, 4.0)
     급탕효율_2 = st.sidebar.select_slider('급탕효율_2', 0.0, 10.0, 20.0)
     조명밀도_2 = st.sidebar.select_slider('조명밀도_2', options=[0, 1])
