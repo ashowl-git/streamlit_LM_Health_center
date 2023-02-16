@@ -359,15 +359,15 @@ df_concat = df_concat.round(2)
 st.subheader('사용처별 에너지 사용량 예측값 그래프')
 st.caption('--------- ', unsafe_allow_html=False)
 
-fig = px.box(df_concat, x='index', y='kW', title='BASE_ALT 원별비교 BOXplot', hover_data=['kW'],   color='Alt' )
+
+fig = px.bar(df_concat, x='index', y='kW', title='BASE_ALT 원별비교 Bar', hover_data=['kW'],   color='Alt' )
 fig.update_xaxes(rangeslider_visible=True)
 fig.update_layout(barmode='group') #alt별 구분
 # fig
 st.plotly_chart(fig, use_container_width=True)
 
 
-
-fig = px.bar(df_concat, x='index', y='kW', title='BASE_ALT 원별비교 BOXplot', hover_data=['kW'],   color='Alt' )
+fig = px.bar(df_concat, x='index', y='kW', title='BASE_ALT 원별비교 Bar', hover_data=['kW'],   color='Alt' )
 fig.update_xaxes(rangeslider_visible=True)
 fig.update_layout(barmode='group') #alt별 구분
 # fig
