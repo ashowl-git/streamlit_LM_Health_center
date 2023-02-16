@@ -335,8 +335,8 @@ df_result2['Alt'] = 'Alt_1'
 # df_result2['kW/m2'] = df_result2['kW'] / df2_input['Occupied_floor_area_2'][0]
 
 
-# df_result
-# df_result2
+df_result
+df_result2
 
 df_result.reset_index(inplace=True)
 df_result2.reset_index(inplace=True)
