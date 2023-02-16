@@ -76,7 +76,7 @@ st.set_page_config(layout="wide", page_title="streamlit_LM_Health_center")
 
 
 # 학습파일 불러오기
-df_raw = pd.read_excel('data/metro_sim_month.xlsx')
+df_raw = pd.read_excel('data\온실가스계수개발연구_OD_결과_DATA (오봉보건진료소).xlsx')
 
 
 st.subheader('LinearRegression 학습 대상 파일 직접 업로드 하기')
@@ -94,29 +94,56 @@ df_raw2 = df_raw.copy()
 
 # Alt 용 독립변수 데이터셋 컬럼명 수정
 df_raw2 = df_raw2.rename(columns={
-    'ACH50':'ACH50_2',
-    'Lighting_power_density_':'Lighting_power_density__2',
-    'Chiller_COP':'Chiller_COP_2',
-    'Pump_efficiency':'Pump_efficiency_2',
-    'Fan_total_efficiency':'Fan_total_efficiency_2',
-    'heat_recover_effectiveness':'heat_recover_effectiveness_2',
-    'AHU_economiser':'AHU_economiser_2',
-    'Occupied_floor_area':'Occupied_floor_area_2',
-    'Floor':'Floor_2',
-    'Basement':'Basement_2',
-    'Ground':'Ground_2',
+    '외벽':'외벽_2',
+    '지붕':'지붕_2',
+    '바닥':'바닥_2',
+    '창호열관류율':'창호열관류율_2',
+    'SHGC':'SHGC_2',
+    '문열관류율':'문열관류율_2',
+    '난방효율':'난방효율_2',
+    ' 냉방효율':' 냉방효율_2',
+    '급탕효율':'급탕효율_2',
+    '조명밀도':'조명밀도_2',
+    '중부1':'중부1_2',
+    '중부2':'중부2_2',
+    '남부':'남부_2',
+    '제주':'제주_2',
     })
 
 
 # 독립변수컬럼 리스트
-lm_features =['ACH50', 'Lighting_power_density_', 'Chiller_COP', 'Pump_efficiency',
-       'Fan_total_efficiency', 'heat_recover_effectiveness', 'AHU_economiser',
-       'Occupied_floor_area', 'Floor', 'Basement', 'Ground',]
+lm_features =[
+    '외벽',
+    '지붕',
+    '바닥',
+    '창호열관류율',
+    'SHGC',
+    '문열관류율',
+    '난방효율',
+    ' 냉방효율',
+    '급탕효율',
+    '조명밀도',
+    '중부1',
+    '중부2',
+    '남부',
+    '제주',]
 
 # Alt 용 독립변수 데이터셋 컬럼명 리스트
-lm_features2 =['ACH50_2', 'Lighting_power_density__2', 'Chiller_COP_2', 'Pump_efficiency_2',
-       'Fan_total_efficiency_2', 'heat_recover_effectiveness_2', 'AHU_economiser_2',
-       'Occupied_floor_area_2', 'Floor_2', 'Basement_2', 'Ground_2',]
+lm_features2 =[
+    '외벽_2',
+    '지붕_2',
+    '바닥_2',
+    '창호열관류율_2',
+    'SHGC_2',
+    '문열관류율_2',
+    '난방효율_2',
+    ' 냉방효율_2',
+    '급탕효율_2',
+    '조명밀도_2',
+    '중부1_2',
+    '중부2_2',
+    '남부_2',
+    '제주_2',]
 
 # 종속변수들을 드랍시키고 독립변수 컬럼만 X_data에 저장
 X_data = df_raw[lm_features]
@@ -213,29 +240,36 @@ st.sidebar.header('Specify Input Parameters_BASE')
 
 def user_input_features():
     # ACH50 = st.sidebar.slider('ACH50', X_data.ACH50.min(), X_data.ACH50.max(), X_data.ACH50.mean())
-    ACH50 = st.sidebar.slider('침기율', 0, 50, 25)
-    Lighting_power_density_ = st.sidebar.slider('Lighting_power_density_', 3, 20, 7)
-    Chiller_COP = st.sidebar.slider('Chiller_COP', 4, 9, 6)
-    Pump_efficiency = st.sidebar.slider('Pump_efficiency', 0.0, 1.0, 0.7)
-    Fan_total_efficiency = st.sidebar.slider('Fan_total_efficiency', 0.0, 1.0, 0.7)
-    heat_recover_effectiveness = st.sidebar.slider('heat_recover_effectiveness', 0.0, 1.0, 0.7)
-    AHU_economiser = st.sidebar.select_slider('AHU_economiser', options=[0, 1])
-    Occupied_floor_area = st.sidebar.slider('Occupied_floor_area', 5000, 10000, 6000)
-    Floor = st.sidebar.select_slider('Floor 규모선택', options=[1,2,3])
-    Basement = st.sidebar.select_slider('지상유무', options=[0, 1])
-    Ground = st.sidebar.select_slider('지하유무', options=[0, 1])
+    외벽= st.sidebar.slider('외벽', 0.0, 0.466, 2.0)
+    지붕 = st.sidebar.slider('지붕', 0.0, 0.264, 2.0)
+    바닥 = st.sidebar.slider('바닥', 0.0, 0.466, 2.0)
+    창호열관류율 = st.sidebar.slider('창호열관류율', 0.0, 3.0, 4.0)
+    SHGC = st.sidebar.slider('SHGC', 0.0, 0.688, 2.0)
+    문열관류율 = st.sidebar.slider('문열관류율', 0.0, 3.0, 4.0)
+    난방효율 = st.sidebar.select_slider('난방효율', 0, 87, 100)
+    냉방효율 = st.sidebar.slider(' 냉방효율', 0.0, 3.0, 4.0)
+    급탕효율 = st.sidebar.select_slider('급탕효율', 0.0, 10.0, 20.0)
+    조명밀도 = st.sidebar.select_slider('조명밀도', options=[0, 1])
+    중부1 = st.sidebar.select_slider('중부1', options=[0, 1])
+    중부2 = st.sidebar.select_slider('중부2', options=[0, 1])
+    남부 = st.sidebar.select_slider('남부', options=[0, 1])
+    제주 = st.sidebar.select_slider('제주', options=[0, 1])
 
-    data = {'ACH50': ACH50,
-            'Lighting_power_density_': Lighting_power_density_,
-            'Chiller_COP': Chiller_COP,
-            'Pump_efficiency': Pump_efficiency,
-            'Fan_total_efficiency': Fan_total_efficiency,
-            'heat_recover_effectiveness': heat_recover_effectiveness,
-            'AHU_economiser': AHU_economiser,
-            'Occupied_floor_area': Occupied_floor_area,
-            'Floor': Floor,
-            'Basement': Basement,
-            'Ground': Ground,}
+    data = {'외벽': 외벽,
+            '지붕': 지붕,
+            '바닥': 바닥,
+            '창호열관류율': 창호열관류율,
+            'SHGC': SHGC,
+            '문열관류율': 문열관류율,
+            '난방효율': 난방효율,
+            ' 냉방효율': 냉방효율,
+            '급탕효율': 급탕효율,
+            '조명밀도': 조명밀도,
+            '중부1': 중부1,
+            '중부2': 중부2,
+            '남부': 남부,
+            '제주': 제주,}
+
     features = pd.DataFrame(data, index=[0])
     return features
 df_input = user_input_features()
@@ -248,29 +282,35 @@ st.sidebar.header('Specify Input Parameters_변경후')
 
 def user_input_features2():
     # ACH50 = st.sidebar.slider('ACH50', X_data.ACH50.min(), X_data.ACH50.max(), X_data.ACH50.mean())
-    ACH50_2 = st.sidebar.slider('침기율_2', 0, 50, 25)
-    Lighting_power_density__2 = st.sidebar.slider('Lighting_power_density__2', 3, 20, 7)
-    Chiller_COP_2 = st.sidebar.slider('Chiller_COP_2', 4, 9, 6)
-    Pump_efficiency_2 = st.sidebar.slider('Pump_efficiency_2', 0.0, 1.0, 0.7)
-    Fan_total_efficiency_2 = st.sidebar.slider('Fan_total_efficiency_2', 0.0, 1.0, 0.7)
-    heat_recover_effectiveness_2 = st.sidebar.slider('heat_recover_effectiveness_2', 0.0, 1.0, 0.7)
-    AHU_economiser_2 = st.sidebar.select_slider('AHU_economiser_2', options=[0, 1])
-    Occupied_floor_area_2 = st.sidebar.slider('Occupied_floor_area_2', 5000, 10000, 6000)
-    Floor_2 = st.sidebar.select_slider('Floor 규모선택_2', options=[1,2,3])
-    Basement_2 = st.sidebar.select_slider('지상유무_2', options=[0, 1])
-    Ground_2 = st.sidebar.select_slider('지하유무_2', options=[0, 1])
+    외벽_2= st.sidebar.slider('외벽_2', 0.0, 0.466, 2.0)
+    지붕_2 = st.sidebar.slider('지붕_2', 0.0, 0.264, 2.0)
+    바닥_2 = st.sidebar.slider('바닥_2', 0.0, 0.466, 2.0)
+    창호열관류율_2 = st.sidebar.slider('창호열관류율_2', 0.0, 3.0, 4.0)
+    SHGC_2 = st.sidebar.slider('SHGC_2', 0.0, 0.688, 2.0)
+    문열관류율_2 = st.sidebar.slider('문열관류율_2', 0.0, 3.0, 4.0)
+    난방효율_2 = st.sidebar.select_slider('난방효율_2', 0, 87, 100)
+    냉방효율_2 = st.sidebar.slider(' 냉방효율_2', 0.0, 3.0, 4.0)
+    급탕효율_2 = st.sidebar.select_slider('급탕효율_2', 0.0, 10.0, 20.0)
+    조명밀도_2 = st.sidebar.select_slider('조명밀도_2', options=[0, 1])
+    중부1_2 = st.sidebar.select_slider('중부1_2', options=[0, 1])
+    중부2_2 = st.sidebar.select_slider('중부2_2', options=[0, 1])
+    남부_2 = st.sidebar.select_slider('남부_2', options=[0, 1])
+    제주_2 = st.sidebar.select_slider('제주_2', options=[0, 1])
 
-    data2 = {'ACH50_2': ACH50_2,
-            'Lighting_power_density__2': Lighting_power_density__2,
-            'Chiller_COP_2': Chiller_COP_2,
-            'Pump_efficiency_2': Pump_efficiency_2,
-            'Fan_total_efficiency_2': Fan_total_efficiency_2,
-            'heat_recover_effectiveness_2': heat_recover_effectiveness_2,
-            'AHU_economiser_2': AHU_economiser_2,
-            'Occupied_floor_area_2': Occupied_floor_area_2,
-            'Floor_2': Floor_2,
-            'Basement_2': Basement_2,
-            'Ground_2': Ground_2,}
+    data2 = {'외벽_2': 외벽_2,
+            '지붕_2': 지붕_2,
+            '바닥_2': 바닥_2,
+            '창호열관류율_2': 창호열관류율_2,
+            'SHGC_2': SHGC_2,
+            '문열관류율_2': 문열관류율_2,
+            '난방효율_2': 난방효율_2,
+            ' 냉방효율_2': 냉방효율_2,
+            '급탕효율_2': 급탕효율_2,
+            '조명밀도_2': 조명밀도_2,
+            '중부1_2': 중부1_2,
+            '중부2_2': 중부2_2,
+            '남부_2': 남부_2,
+            '제주_2': 제주_2,}
             
     features2 = pd.DataFrame(data2, index=[0])
     return features2
@@ -291,8 +331,8 @@ df_result2 = pd.DataFrame(result2, columns=lm_result_features2).T.rename(columns
 
 df_result['Alt'] = 'BASE'
 df_result2['Alt'] = 'Alt_1'
-df_result['kW/m2'] = df_result['kW'] / df_input['Occupied_floor_area'][0]
-df_result2['kW/m2'] = df_result2['kW'] / df2_input['Occupied_floor_area_2'][0]
+# df_result['kW/m2'] = df_result['kW'] / df_input['Occupied_floor_area'][0]
+# df_result2['kW/m2'] = df_result2['kW'] / df2_input['Occupied_floor_area_2'][0]
 
 
 # df_result
