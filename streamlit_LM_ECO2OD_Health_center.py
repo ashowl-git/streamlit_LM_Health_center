@@ -336,10 +336,10 @@ df_result2['Alt'] = 'Alt_1'
 
 
 # df_result
-# df_result2/
+# df_result2
 
 df_result.reset_index(inplace=True)
-df_result2.reset_index(inplace=True)e
+df_result2.reset_index(inplace=True)
 
 # df_result.rename(columns={'index':'BASE_index'})
 # df_result2.rename(columns={'index':'BASE_index2'})
