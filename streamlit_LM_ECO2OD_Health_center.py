@@ -338,36 +338,8 @@ df_result2['Alt'] = 'Alt_1'
 df_result
 df_result2
 
-df_result.reset_index(inplace=True)
-df_result2.reset_index(inplace=True)
-
-# df_result.rename(columns={'index':'BASE_index'})
-# df_result2.rename(columns={'index':'BASE_index2'})
-# 숫자만 추출해서 행 만들기 
-# 숫자+'호' 문자열 포함한 행 추출해서 행 만들기 df['floor'] = df['addr'].str.extract(r'(\d+호)')
-
-# 숫자만 추출해서 Month 행 만들기
-df_result['Month'] = df_result['index'].str.extract(r'(\d+)')
-df_result2['Month'] = df_result2['index'].str.extract(r'(\d+)')
-# df_result
-# df_result2
-df_result['index']  =df_result['index'].str.slice(0,-3)
-df_result2['index'] = df_result2['index'].str.slice(0,-3)
-# BASE 와 ALT 데이터 컬럼 머지시켜 하나의 데이터 프레임 만들기
-# df_result_merge = pd.merge(df_result, df_result2)
-
 df_concat = pd.concat([df_result,df_result2])
 
-# df_concat
-# df_concat['index'] = df_concat['index'].str.slice(0,-3)
-
-
-
-# df_concat = df_concat.drop(columns='level_0')
-# df_concat
-# df_result_merge = df_result_merge.rename(columns={'index':'BASE_index'})
-# df_result_merge['ALT_index'] = df_result_merge['BASE_index']
-# df_result_merge
 
 
 
