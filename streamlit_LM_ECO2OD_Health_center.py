@@ -345,3 +345,5 @@ fig.update_xaxes(rangeslider_visible=True)
 fig.update_layout(barmode='group') #alt별 구분
 # fig
 st.plotly_chart(fig, use_container_width=True)
+
+df_concat.groupby('Alt')['kW'].sum()
