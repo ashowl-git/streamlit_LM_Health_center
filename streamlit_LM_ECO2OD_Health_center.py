@@ -76,7 +76,7 @@ st.set_page_config(layout="wide", page_title="streamlit_LM_Health_center")
 
 
 # 학습파일 불러오기
-df_raw = pd.read_excel('data\hc.xlsx')
+df_raw = pd.read_excel('\data\hc.xlsx')
 
 
 st.subheader('LinearRegression 학습 대상 파일 직접 업로드 하기')
