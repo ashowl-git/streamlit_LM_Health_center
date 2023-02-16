@@ -137,12 +137,12 @@ lm_result_features2 = Y_data2.columns.tolist()
 # 학습데이터에서 일부를 분리하여 테스트세트를 만들어 모델을 평가 학습8:테스트2
 X_train, X_test, y_train, y_test = train_test_split(
   X_data, Y_data , 
-  test_size=0.1, 
+  test_size=0.2, 
   random_state=150)
 
 X_train2, X_test2, y_train2, y_test2 = train_test_split(
   X_data2, Y_data2 , 
-  test_size=0.1, 
+  test_size=0.2, 
   random_state=150)
 
 # 학습 모듈 인스턴스 생성
