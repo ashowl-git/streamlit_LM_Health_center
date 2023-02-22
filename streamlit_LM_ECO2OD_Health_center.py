@@ -351,4 +351,5 @@ df_groupby_sum = df_concat.groupby('Alt')['kW'].sum()
 st.dataframe(df_groupby_sum)
 
 
+st.dataframe(df_concat)
 df_concat
