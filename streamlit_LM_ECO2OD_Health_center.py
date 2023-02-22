@@ -147,7 +147,7 @@ X_train2, X_test2, y_train2, y_test2 = train_test_split(
 
 # 학습 모듈 인스턴스 생성
 lr = LinearRegression() 
-lr2 = LinearRegression() 
+lr2 = LinearRegression()
 
 # 인스턴스 모듈에 학습시키기
 lr.fit(X_train, y_train)
@@ -245,6 +245,7 @@ def user_input_features():
 
     features = pd.DataFrame(data, index=[0])
     return features
+
 df_input = user_input_features()
 result = lr.predict(df_input)
 
@@ -348,3 +349,6 @@ st.plotly_chart(fig, use_container_width=True)
 
 df_groupby_sum = df_concat.groupby('Alt')['kW'].sum()
 st.dataframe(df_groupby_sum)
+
+
+df_concat
