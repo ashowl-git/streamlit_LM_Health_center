@@ -4,7 +4,7 @@
 # conda install -c plotly plotly=4.12.0
 # conda install -c conda-forge cufflinks-py
 # conda install seaborn
-   
+
 import glob 
 import os
 import sys, subprocess
@@ -322,10 +322,10 @@ cond1 = df_concat['kW'] < 0
 df_concat.loc[cond1,'kW'] = 0
 
 st.checkbox("Use container width _ BASE", value=False, key="use_container_width")
-st.dataframe(df_concat, use_container_width=st.session_state.use_container_width)
+# st.dataframe(df_concat, use_container_width=st.session_state.use_container_width)
 
 df_concat = df_concat.reset_index(drop=False)
-df_concat = df_concat.round(2)
+df2_concat = df_concat.round(2)
 
 
 # 예측값을 데이터 프레임으로 만들어본것을 그래프로 그려보기
@@ -353,3 +353,86 @@ st.dataframe(df_groupby_sum)
 
 st.dataframe(df_concat)
 df_concat
+
+
+
+
+
+
+#____________________온실가스 산정부
+
+
+# 지구온난화지수 global warming potential
+CO2_GWP = 1
+CH4_GWP = 21
+N2O_GWP = 310
+
+
+# 전기 tGHG/MWh
+CO2_elec = 0.4567 * CO2_GWP
+CH4_elec = 0.0000036 * CH4_GWP
+N2O_elec = 0.0000085 * N2O_GWP
+
+tCO2eq_elec_co = (CO2_elec+CH4_elec+N2O_elec)
+
+# 가스 LNG kgGHG/TJ
+CO2_LNG = 56100 * CO2_GWP
+CH4_LNG = 5 * CH4_GWP
+N2O_LNG = 0.1 * N2O_GWP
+
+#MW -> MJ로 환산필요 (3.6*0.000001)
+tCO2eq_LNG_co = 3.6*0.000001 * (CO2_LNG+CH4_LNG+N2O_LNG)
+
+# 가스 LPG kgGHG/TJ
+CO2_LPG = 63100 * CO2_GWP
+CH4_LPG = 5 * CH4_GWP
+N2O_LPG = 0.1 * N2O_GWP
+
+#MW -> MJ로 환산필요 (3.6*0.000001)
+tCO2eq_LPG_co = 3.6*0.000001 * (CO2_LPG+CH4_LPG+N2O_LPG)
+
+
+# 가스 등유 kgGHG/TJ
+CO2_LOil = 71900 * CO2_GWP
+CH4_LOil = 10 * CH4_GWP
+N2O_LOil = 0.6 * N2O_GWP
+
+#MW -> MJ로 환산필요 (3.6*0.000001)
+tCO2eq_LOil_co = 3.6*0.000001 * (CO2_LOil+CH4_LOil+N2O_LOil)
+
+
+# 탄소배출량 계산 간이
+df_concat2 = df_concat.copy()
+df_concat2['MW'] = df_concat2['kW'] / 1000
+
+cond2 = df_concat2['index'] == '난방'
+cond3 = df_concat2['index'] == '급탕'
+
+# 난방 열원의 연료종류 비율 조정
+df_concat2.loc[cond2,'tCO2eq_gas'] = df_concat2['MW'] * 0.8 * tCO2eq_LNG_co
+df_concat2.loc[cond2,'tCO2eq_Elec'] = df_concat2['MW'] * 0.2 * tCO2eq_elec_co
+
+# 급탕 열원의 연료종류 비율 조정
+df_concat2.loc[cond3,'tCO2eq_gas'] = (df_concat2['MW'] * 0.5) * tCO2eq_LNG_co
+df_concat2.loc[cond3,'tCO2eq_Elec'] = df_concat2['MW'] * 0.5 * tCO2eq_elec_co
+
+# 전기사용 index는 그대로 전기로
+cond4 = df_concat2['index'] == '냉방'
+cond5 = df_concat2['index'] == '조명'
+cond6 = df_concat2['index'] == '환기'
+df_concat2.loc[cond4|cond5|cond6,'tCO2eq_Elec'] = df_concat2['MW'] * tCO2eq_elec_co
+
+
+
+df_concat2 = df_concat2.fillna(0)
+df_concat2['tCO2eq'] = df_concat2['tCO2eq_gas'] + df_concat2['tCO2eq_Elec'] 
+
+df_tCO2eq = df_concat2.groupby('Alt')['tCO2eq'].agg(sum).reset_index()
+df_tCO2eq
+
+tCO2eq_reduce = df_tCO2eq['tCO2eq'].loc[0] - df_tCO2eq['tCO2eq'].loc[1]
+tCO2eq_reduce
+
+
+st.metric(label="tCO2eq", value=df_tCO2eq['tCO2eq'].loc[0], delta=tCO2eq_reduce,
+    delta_color="inverse")
