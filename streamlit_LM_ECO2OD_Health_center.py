@@ -352,7 +352,7 @@ st.dataframe(df_groupby_sum)
 
 
 st.dataframe(df_concat)
-df_concat
+# df_concat
 
 
 
@@ -431,7 +431,7 @@ df_tCO2eq = df_concat2.groupby('Alt')['tCO2eq'].agg(sum).reset_index()
 df_tCO2eq
 
 tCO2eq_reduce = df_tCO2eq['tCO2eq'].loc[0] - df_tCO2eq['tCO2eq'].loc[1]
-tCO2eq_reduce
+# tCO2eq_reduce
 
 
 st.metric(label="tCO2eq", value=df_tCO2eq['tCO2eq'].loc[0], delta=tCO2eq_reduce,
