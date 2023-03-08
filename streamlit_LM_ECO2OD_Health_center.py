@@ -49,6 +49,7 @@ from sklearn.metrics import mean_squared_log_error
 st.set_page_config(layout="wide", page_title="LM_Health_center")
 
 # 학습파일 불러오기
+# @st.cache_data
 df_raw = pd.read_excel('data/hc.xlsx')
 
 
@@ -56,6 +57,7 @@ st.subheader('LinearRegression 학습 대상 파일 직접 업로드 하기')
 st.caption('업로드 하지 않아도 기본 학습 Data-set 으로 작동합니다 ', unsafe_allow_html=False)
 
 # 학습할 파일을 직접 업로드 하고 싶을때
+
 uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
   df_raw = pd.read_excel(uploaded_file)
@@ -426,7 +428,7 @@ df_concat2.loc[cond4|cond5|cond6,'tCO2eq_Elec/m2'] = df_concat2['MW/m2'] * tCO2e
 
 df_concat2 = df_concat2.fillna(0)
 df_concat2['tCO2eq/m2'] = df_concat2['tCO2eq_gas/m2'] + df_concat2['tCO2eq_Elec/m2'] 
-
+df_concat2
 df_tCO2eq = df_concat2.groupby('Alt')['tCO2eq/m2'].agg(sum).reset_index()
 df_tCO2eq
 
@@ -437,7 +439,7 @@ tCO2eq_reduce = tCO2eq_Alt - tCO2eq_BASE
 
 # tCO2eq_reduce
 
-st.metric(label="tCO2eq/m2", 
+st.metric(label="Alt_tCO2eq/m2", 
           value = np.round(tCO2eq_Alt, 3), 
           delta = np.round(tCO2eq_reduce, 3), 
           delta_color="inverse")
