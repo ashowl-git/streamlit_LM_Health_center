@@ -46,7 +46,7 @@ from sklearn.metrics import mean_absolute_percentage_error
 from sklearn.metrics import mean_squared_log_error
 
 
-st.set_page_config(layout="wide", page_title="국토안전관리원_온실가스감축계수")
+
 
 
 
@@ -89,7 +89,7 @@ hide_menu_style = """
         </style>
         """
 
-st.set_page_config(layout="wide", page_title="KRRI_subway_Energy")
+st.set_page_config(layout="wide", page_title="국토안전관리원_온실가스감축계수")
 st.markdown(hide_menu_style, unsafe_allow_html=True) # hide the hamburger menu?
 
 
