@@ -440,8 +440,8 @@ tCO2eq_reduce = tCO2eq_Alt - tCO2eq_BASE
 # tCO2eq_reduce
 
 st.metric(label="Alt_tCO2eq/m2", 
-          value = np.round(tCO2eq_Alt, 3), 
-          delta = np.round(tCO2eq_reduce, 3), 
+          value = np.round(tCO2eq_Alt, 4), 
+          delta = np.round(tCO2eq_reduce, 4), 
           delta_color="inverse")
 
 
