@@ -299,8 +299,8 @@ st.caption('좌측의 변수항목 슬라이더 조정 ', unsafe_allow_html=Fals
 st.caption('--------- ', unsafe_allow_html=False)
 
 # 예측된 결과를 데이터 프레임으로 만들어 보기
-df_result = pd.DataFrame(result, columns=lm_result_features).T.rename(columns={0:'kW'})
-df_result2 = pd.DataFrame(result2, columns=lm_result_features2).T.rename(columns={0:'kW'})
+df_result = pd.DataFrame(result, columns=lm_result_features).T.rename(columns={0:'kW/m2'})
+df_result2 = pd.DataFrame(result2, columns=lm_result_features2).T.rename(columns={0:'kW/m2'})
 
 
 df_result['Alt'] = 'BASE'
@@ -318,8 +318,8 @@ df_concat = pd.concat([df_result,df_result2])
 
 
 # 추세에 따라 음수값이 나오는것은 0으로 수정
-cond1 = df_concat['kW'] < 0
-df_concat.loc[cond1,'kW'] = 0
+cond1 = df_concat['kW/m2'] < 0
+df_concat.loc[cond1,'kW/m2'] = 0
 
 st.checkbox("Use container width _ BASE", value=False, key="use_container_width")
 # st.dataframe(df_concat, use_container_width=st.session_state.use_container_width)
@@ -334,20 +334,20 @@ st.subheader('사용처별 에너지 사용량 예측값 그래프')
 st.caption('--------- ', unsafe_allow_html=False)
 
 
-fig = px.bar(df_concat, x='index', y='kW', title='BASE_ALT 원별비교 Bar', hover_data=['kW'],   color='Alt' )
+fig = px.bar(df_concat, x='index', y='kW/m2', title='BASE_ALT 원별비교 Bar', hover_data=['kW/m2'],   color='Alt' )
 fig.update_xaxes(rangeslider_visible=True)
 fig.update_layout(barmode='group') #alt별 구분
 # fig
 st.plotly_chart(fig, use_container_width=True)
 
 
-fig = px.bar(df_concat, x='Alt', y='kW', title='BASE_ALT 원별비교 Bar', hover_data=['kW'],   color='index' )
+fig = px.bar(df_concat, x='Alt', y='kW/m2', title='BASE_ALT 원별비교 Bar', hover_data=['kW/m2'],   color='index' )
 fig.update_xaxes(rangeslider_visible=True)
 fig.update_layout(barmode='group') #alt별 구분
 # fig
 st.plotly_chart(fig, use_container_width=True)
 
-df_groupby_sum = df_concat.groupby('Alt')['kW'].sum()
+df_groupby_sum = df_concat.groupby('Alt')['kW/m2'].sum()
 st.dataframe(df_groupby_sum)
 
 
@@ -403,41 +403,41 @@ tCO2eq_LOil_co = 3.6*0.000001 * (CO2_LOil+CH4_LOil+N2O_LOil)
 
 # 탄소배출량 계산 간이
 df_concat2 = df_concat.copy()
-df_concat2['MW'] = df_concat2['kW'] / 1000
+df_concat2['MW/m2'] = df_concat2['kW/m2'] / 1000
 
 cond2 = df_concat2['index'] == '난방'
 cond3 = df_concat2['index'] == '급탕'
 
 # 난방 열원의 연료종류 비율 조정
-df_concat2.loc[cond2,'tCO2eq_gas'] = df_concat2['MW'] * 0.8 * tCO2eq_LNG_co
-df_concat2.loc[cond2,'tCO2eq_Elec'] = df_concat2['MW'] * 0.2 * tCO2eq_elec_co
+df_concat2.loc[cond2,'tCO2eq_gas/m2'] = df_concat2['MW/m2'] * 0.8 * tCO2eq_LNG_co
+df_concat2.loc[cond2,'tCO2eq_Elec/m2'] = df_concat2['MW/m2'] * 0.2 * tCO2eq_elec_co
 
 # 급탕 열원의 연료종류 비율 조정
-df_concat2.loc[cond3,'tCO2eq_gas'] = (df_concat2['MW'] * 0.5) * tCO2eq_LNG_co
-df_concat2.loc[cond3,'tCO2eq_Elec'] = df_concat2['MW'] * 0.5 * tCO2eq_elec_co
+df_concat2.loc[cond3,'tCO2eq_gas/m2'] = (df_concat2['MW/m2'] * 0.5) * tCO2eq_LNG_co
+df_concat2.loc[cond3,'tCO2eq_Elec/m2'] = df_concat2['MW/m2'] * 0.5 * tCO2eq_elec_co
 
 # 전기사용 index는 그대로 전기로
 cond4 = df_concat2['index'] == '냉방'
 cond5 = df_concat2['index'] == '조명'
 cond6 = df_concat2['index'] == '환기'
-df_concat2.loc[cond4|cond5|cond6,'tCO2eq_Elec'] = df_concat2['MW'] * tCO2eq_elec_co
+df_concat2.loc[cond4|cond5|cond6,'tCO2eq_Elec/m2'] = df_concat2['MW/m2'] * tCO2eq_elec_co
 
 
 
 df_concat2 = df_concat2.fillna(0)
-df_concat2['tCO2eq'] = df_concat2['tCO2eq_gas'] + df_concat2['tCO2eq_Elec'] 
+df_concat2['tCO2eq/m2'] = df_concat2['tCO2eq_gas/m2'] + df_concat2['tCO2eq_Elec/m2'] 
 
-df_tCO2eq = df_concat2.groupby('Alt')['tCO2eq'].agg(sum).reset_index()
+df_tCO2eq = df_concat2.groupby('Alt')['tCO2eq/m2'].agg(sum).reset_index()
 df_tCO2eq
 
 
-tCO2eq_Alt = df_tCO2eq['tCO2eq'].loc[0]
-tCO2eq_BASE = df_tCO2eq['tCO2eq'].loc[1]
+tCO2eq_Alt = df_tCO2eq['tCO2eq/m2'].loc[0]
+tCO2eq_BASE = df_tCO2eq['tCO2eq/m2'].loc[1]
 tCO2eq_reduce = tCO2eq_Alt - tCO2eq_BASE
 
 # tCO2eq_reduce
 
-st.metric(label="tCO2eq", 
+st.metric(label="tCO2eq/m2", 
           value = np.round(tCO2eq_Alt, 3), 
           delta = np.round(tCO2eq_reduce, 3), 
           delta_color="inverse")
