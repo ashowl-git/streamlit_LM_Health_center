@@ -430,9 +430,16 @@ df_concat2['tCO2eq'] = df_concat2['tCO2eq_gas'] + df_concat2['tCO2eq_Elec']
 df_tCO2eq = df_concat2.groupby('Alt')['tCO2eq'].agg(sum).reset_index()
 df_tCO2eq
 
-tCO2eq_reduce = df_tCO2eq['tCO2eq'].loc[0] - df_tCO2eq['tCO2eq'].loc[1]
+
+tCO2eq_Alt = df_tCO2eq['tCO2eq'].loc[0]
+tCO2eq_BASE = df_tCO2eq['tCO2eq'].loc[1]
+tCO2eq_reduce = tCO2eq_Alt - tCO2eq_BASE
+
 # tCO2eq_reduce
 
+st.metric(label="tCO2eq", 
+          value = np.round(tCO2eq_Alt, 3), 
+          delta = np.round(tCO2eq_reduce, 3), 
+          delta_color="inverse")
 
-st.metric(label="tCO2eq", value=df_tCO2eq['tCO2eq'].loc[0], delta=tCO2eq_reduce,
-    delta_color="inverse")
+
