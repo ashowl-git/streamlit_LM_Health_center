@@ -453,7 +453,7 @@ df_tCO2eq_Alt_1 = df_concat2.loc[df_concat2['Alt'] == 'Alt_1', 'tCO2eq/m2'].rese
 df_tCO2eq_BASE
 df_tCO2eq_Alt_1
 
-df_tCO2eq_element = df_tCO2eq_BASE - df_tCO2eq_Alt_1
+df_tCO2eq_element = df_tCO2eq_Alt_1 - df_tCO2eq_BASE
 df_tCO2eq_element = df_tCO2eq_element.drop(columns='index')
 df_tCO2eq_element
 
