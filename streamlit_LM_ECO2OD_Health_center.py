@@ -223,7 +223,7 @@ def user_input_features():
     냉방효율 = st.sidebar.slider(' 냉방효율', 0.0, 4.0, 3.0 )
     급탕효율 = st.sidebar.slider('급탕효율', 0.0, 100.0, 87.0 )
     조명밀도 = st.sidebar.slider('조명밀도',  0.0, 20.0, 10.0, )
-    중부1 = st.sidebar.select_slider('중부1', options=[0, 1])
+    중부1 = st.sidebar.select_slider('중부1', options=[0, 1],1)
     중부2 = st.sidebar.select_slider('중부2', options=[0, 1])
     남부 = st.sidebar.select_slider('남부', options=[0, 1])
     제주 = st.sidebar.select_slider('제주', options=[0, 1])
