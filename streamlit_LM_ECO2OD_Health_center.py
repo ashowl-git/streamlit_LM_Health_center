@@ -46,7 +46,58 @@ from sklearn.metrics import mean_absolute_percentage_error
 from sklearn.metrics import mean_squared_log_error
 
 
-st.set_page_config(layout="wide", page_title="LM_Health_center")
+st.set_page_config(layout="wide", page_title="국토안전관리원_온실가스감축계수")
+
+
+
+# import streamlit as st
+
+# def main_page():
+#     st.markdown("# Main page 🎈")
+#     st.sidebar.markdown("# Main page 🎈")
+
+# def page2():
+#     st.markdown("# Page 2 ❄️")
+#     st.sidebar.markdown("# Page 2 ❄️")
+
+# def page3():
+#     st.markdown("# Page 3 🎉")
+#     st.sidebar.markdown("# Page 3 🎉")
+
+# page_names_to_funcs = {
+#     "Main Page": main_page,
+#     "Page 2": page2,
+#     "Page 3": page3,
+# }
+
+# selected_page = st.sidebar.selectbox("Select a page", page_names_to_funcs.keys())
+# page_names_to_funcs[selected_page]()
+
+
+# # hide the hamburger menu?
+hide_menu_style = """
+        <style>
+        #MainMenu {visibility: hidden;}
+        footer {visibility: visible;}
+        footer:after {content:'Copyright @ 2023: EAN 기술연구소 all rights reserved';
+        display:block;
+        opsition:relatiive;
+        color:tomato;
+        padding:5px;
+        top:100px;}
+
+        </style>
+        """
+
+st.set_page_config(layout="wide", page_title="KRRI_subway_Energy")
+st.markdown(hide_menu_style, unsafe_allow_html=True) # hide the hamburger menu?
+
+
+
+
+
+
+
 
 # 학습파일 불러오기
 # @st.cache_data
