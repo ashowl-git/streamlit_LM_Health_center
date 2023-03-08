@@ -437,18 +437,22 @@ tCO2eq_Alt = df_tCO2eq['tCO2eq/m2'].loc[0]
 tCO2eq_BASE = df_tCO2eq['tCO2eq/m2'].loc[1]
 tCO2eq_reduce = tCO2eq_Alt - tCO2eq_BASE
 
+
+
+
+
 # tCO2eq_reduce
 # 절감량 데쉬보드 보기
 st.subheader('온실가스 절감량 tCO2eq/m2')
 st.caption('--------', unsafe_allow_html=False)
 
 col1, col2 = st.columns(2)
-col1.st.metric(label="Alt_tCO2eq/m2", 
+col1.metric(label="Alt_tCO2eq/m2", 
           value = np.round(tCO2eq_Alt, 4), 
           delta = np.round(tCO2eq_reduce, 4), 
           delta_color="inverse")
 
-col2.st.metric(label="Reduce_tCO2eq/m2", 
+col2.metric(label="Reduce_tCO2eq/m2", 
           value = np.round(tCO2eq_reduce, 4),  
           delta_color="inverse")
 
