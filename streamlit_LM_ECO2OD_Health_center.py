@@ -458,14 +458,16 @@ col2.metric(label="Reduce_tCO2eq/m2",
 
 # 사용처별 온실가스 절감량 확인해보기 (굳이 필요한가?)
 # drop=True or drop col
-df_tCO2eq_BASE = df_concat2.loc[df_concat2['Alt'] == 'BASE', 'tCO2eq/m2'].reset_index()
-df_tCO2eq_Alt_1 = df_concat2.loc[df_concat2['Alt'] == 'Alt_1', 'tCO2eq/m2'].reset_index()
+df_tCO2eq_BASE = df_concat2.loc[df_concat2['Alt'] == 'BASE', ['tCO2eq/m2']].reset_index()
+df_tCO2eq_Alt_1 = df_concat2.loc[df_concat2['Alt'] == 'Alt_1', ['tCO2eq/m2']].reset_index()
 df_tCO2eq_BASE
 df_tCO2eq_Alt_1
 
 df_tCO2eq_element = df_tCO2eq_Alt_1 - df_tCO2eq_BASE
-df_tCO2eq_element = df_tCO2eq_element.drop(columns='index')
-df_tCO2eq_element
+# df_tCO2eq_element = df_tCO2eq_element.drop(columns='index')
+df_tCO2eq_element['index'] = ['난방','냉방','급탕','환기','조명']
 
+df_tCO2eq_element.set_index(keys=['index'], inplace=False, )
+df_tCO2eq_element
 
 
