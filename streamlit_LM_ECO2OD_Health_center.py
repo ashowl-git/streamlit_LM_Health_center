@@ -444,7 +444,9 @@ st.metric(label="Alt_tCO2eq/m2",
           delta = np.round(tCO2eq_reduce, 4), 
           delta_color="inverse")
 
-
+st.metric(label="Reduce_tCO2eq/m2", 
+          value = np.round(tCO2eq_reduce, 4),  
+          delta_color="inverse")
 
 # 사용처별 온실가스 절감량 확인해보기 (굳이 필요한가?)
 # drop=True or drop col
