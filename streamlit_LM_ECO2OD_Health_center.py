@@ -460,8 +460,8 @@ col2.metric(label="Reduce_tCO2eq/m2",
 # drop=True or drop col
 df_tCO2eq_BASE = df_concat2.loc[df_concat2['Alt'] == 'BASE', ['tCO2eq/m2']].reset_index()
 df_tCO2eq_Alt_1 = df_concat2.loc[df_concat2['Alt'] == 'Alt_1', ['tCO2eq/m2']].reset_index()
-df_tCO2eq_BASE
-df_tCO2eq_Alt_1
+# df_tCO2eq_BASE
+# df_tCO2eq_Alt_1
 
 df_tCO2eq_element = df_tCO2eq_Alt_1 - df_tCO2eq_BASE
 # df_tCO2eq_element = df_tCO2eq_element.drop(columns='index')
