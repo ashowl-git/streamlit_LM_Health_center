@@ -79,7 +79,7 @@ hide_menu_style = """
         <style>
         #MainMenu {visibility: hidden;}
         footer {visibility: visible;}
-        footer:after {content:'Copyright @ 2023: EAN 기술연구소 all rights reserved';
+        footer:after {content:'Copyright @ 2023: EAN technology all rights reserved';
         display:block;
         opsition:relatiive;
         color:tomato;
